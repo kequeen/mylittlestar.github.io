@@ -24,11 +24,11 @@ wiki上的定义，消息队列（Message queue，下面简称MQ）是一种进�
 ### 方案选择
 我们比对了当前市场上的诸多方案，与我们的业务进行适配，并最终选择了rabbitmq来搭建我们的消息队列2.0
 下面说一下我们为什么没有选择其他方案：
-redis:
+- redis:
 redis高版本推出了发布订阅功能，但是无法解决上面提出的业务痛点2、3
-kafka:
+- kafka:
 官方不支持php
-阿里云的MQ:
+- 阿里云的MQ:
 按照topic与消息流量进行双重收费，而我们的业务类型 topic 会比较多，但是流量初期可能并不多，价格上不划算；不开源，相对于我们是黑盒，很难进行二次开发，满足我们的个性化需求
 
 ## 消息系统2.0
@@ -37,8 +37,10 @@ kafka:
 ### 系统模型
 rabbitmq的基本模型如下
 ![](mq_model.png)
+图中的exchange是消息的分发器，queue是消息的存储之地。
 其本身提供了丰富的功能，包含Work queues(消息系统1.0具备的)，Publish/Subscribe，Routing，Topics，RPC。[具体详情](https://www.rabbitmq.com/getstarted.html)
 我们目前只使用了其Publish/Subscribe功能，做了一定的封装。其它的功能待以后扩展使用。
+当前采用了单机部署的形式，用消息持久化 + 监控脚本的形式保证其高可用性。
 
 ### 时序图
 我们重新封装了rabbitmq的接口，以满足我们的业务需求。生产者与消费者的使用时序如下。
@@ -101,14 +103,28 @@ $callback = function ($msg) {
 
 $channel->basic_consume('task_queue', '', false, false, false, false, $callback);
 ```
-我们做了封装之后
+封装之后
 ![消费者消费示例](mq_ackconsumer.png)
+可以明显看出，封装之后对于调用方来说，更加简单了。
 
-##遇到的困难
+## 遇到的一些问题
 ### 1.MQ的崩溃问题
-测试环境下搭建的mq系统时常容易崩溃，因为使用docker，并且对rabbitmq不够熟悉，定位了很久。最终通过docker logs 容器名
-命令查到了erlang oom的报错，定位到了vm_memory_high_watermark.relative（Memory threshold at which the flow control is triggered）的设置有问题，其默认是0.4，
+测试环境下搭建的mq系统压测时常容易崩溃，因为使用docker，并且对rabbitmq不够熟悉，定位了很久。最终通过docker logs 容器名
+命令查到了erlang oom的报错，定位到了vm_memory_high_watermark.relative（Memory threshold at which the flow control is triggered）的设置有问题，其默认是0.4, 就是当rabbitmq使用了机器40%的物理内存时会触发流量控制，阻塞所有的消息发送，等于是一种过载的保护机制。正常独立机器上部署是没有问题的，但是测试机器本身是混合部署，上面部署有其它的业务，所以系统根本分配不出40%的可用内存，在进行压力测试的时候就很容易产生oom错误。
+为了保证测试环境的可用性，我们调整了这个值为0.1。
+
+### 2.消息的持久化
+rabbitmq消息的持久化，一开始认为只需要设置发送的消息是持久化就可以了。但是呢，消息是以队列为载体的，队列本身没有持久化的话，消息又何处安放呢？
+消息的持久化需要将queue，exchange，message 都持久化。队列是持久化的只是意味着当 broker 重启的时候，队列会立即按照其原本性质重建如果只是为了保证消息不丢失，只需要设置 queue 与 message 的持久化，设置 exchange 的持久化的目的在于，当 broker 重启之后，能够重建 exchange，使消息能够正常发送。
 
 
-
+## 总结
+本系统有以下核心功能 :
+1. 发布/订阅功能
+2. 队列与topic的管理权限控制
+3. 消息消费的监控
+4. 消费进程的管理后台控制与保护
+5. 消息消费确认功能
+本系统很好地满足了当下的业务需求，为了保证可用性，在速度方面做了一定的妥协（消息持久化，持久化会将消息写入硬盘），但每秒2500+的写入速度，对当前系统来说还是足够的。
+总而言之，这是一套满足了当下需求的消息系统。
 
