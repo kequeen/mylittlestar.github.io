@@ -62,6 +62,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mq-v2-md" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/23/mq-v2-md/" class="article-date">
+  <time datetime="2019-01-23T11:42:32.000Z" itemprop="datePublished">2019-01-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/23/mq-v2-md/">mq_v2.md</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>wiki上的定义，消息队列（Message queue，下面简称MQ）是一种进程间通信或同一进程的不同线程间的通信方式。</p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><h3 id="消息队列1-0"><a href="#消息队列1-0" class="headerlink" title="消息队列1.0"></a>消息队列1.0</h3><p>小雨伞原有消息队列底层是使用redis的list数据结构来实现的，通过rpush与lpop操作实现消息的入栈与出栈。<br><img src="old_mq.png" alt=""><br>消息队列1.0优点：</p>
+<ol>
+<li>实现简单</li>
+<li>调用方便<br>但是随着业务的增长，消息队列1.0在功能和管理上越来越难以满足我们的业务需求。</li>
+</ol>
+<h3 id="业务痛点"><a href="#业务痛点" class="headerlink" title="业务痛点"></a>业务痛点</h3><p>原有消息队列1.0有以下业务痛点：</p>
+<ol>
+<li>不支持发布订阅，只支持了点对点模型</li>
+<li>不支持消费应答，即无法通过消息系统保证消息一定被成功处理，只能通过业务的最终一致性来进行保证</li>
+<li>无法直观看到当前消息系统的消费情况，只能通过业务告警来发现消息系统的异常</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/01/23/mq-v2-md/" data-id="cjr94ezln00024cw32frfw098" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hello-world" class="article article-type-post" itemscope="" itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/01/21/hello-world/" class="article-date">
@@ -97,7 +145,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/21/hello-world/" data-id="cjr5uj0a500008ow3jb5uavkv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/21/hello-world/" data-id="cjr94ezle00004cw3hsk62a3r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -179,7 +227,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/20/mq/" data-id="cjr5uj0ac00018ow33nekjkll" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/20/mq/" data-id="cjr94ezll00014cw359e8kdd2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -218,6 +266,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/01/23/mq-v2-md/">mq_v2.md</a>
+          </li>
         
           <li>
             <a href="/2019/01/21/hello-world/">Hello World</a>
