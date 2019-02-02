@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="前言消息队列（Message queue，下面简称MQ）是一种进程间通信或同一进程的不同线程间的通信方式，常用于消息分发、系统解耦，流量削峰填谷等方面，是大型分布式系统不可或缺的中间件。消息队列有两种模型，点对点和发布/订阅模型。小雨伞发展初期，只使用了点对点模型就满足了我们的需求，而随着业务的发展，原有的点对点模型越来越难以支撑业务的发展，增加发布订阅模型的事情也提上了日程。 消息队列1.0我们">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-02T03:34:05.213Z">
+<meta property="og:updated_time" content="2019-02-02T03:35:42.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小雨伞消息队列演化.md">
 <meta name="twitter:description" content="前言消息队列（Message queue，下面简称MQ）是一种进程间通信或同一进程的不同线程间的通信方式，常用于消息分发、系统解耦，流量削峰填谷等方面，是大型分布式系统不可或缺的中间件。消息队列有两种模型，点对点和发布/订阅模型。小雨伞发展初期，只使用了点对点模型就满足了我们的需求，而随着业务的发展，原有的点对点模型越来越难以支撑业务的发展，增加发布订阅模型的事情也提上了日程。 消息队列1.0我们">
@@ -299,7 +299,7 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>消息队列（Message queue，下面简称MQ）是一种进程间通信或同一进程的不同线程间的通信方式，常用于消息分发、系统解耦，流量削峰填谷等方面，是大型分布式系统不可或缺的中间件。<br>消息队列有两种模型，点对点和发布/订阅模型。小雨伞发展初期，只使用了点对点模型就满足了我们的需求，而随着业务的发展，原有的点对点模型越来越难以支撑业务的发展，增加发布订阅模型的事情也提上了日程。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>消息队列（Message queue，下面简称MQ）是一种进程间通信或同一进程的不同线程间的通信方式，常用于消息分发、系统解耦，流量削峰填谷等方面，是大型分布式系统不可或缺的中间件。<br>消息队列有两种模型，点对点和发布/订阅模型。小雨伞发展初期，只使用了点对点模型就满足了我们的需求，而随着业务的发展，原有的点对点模型越来越难以支撑业务的发展，增加发布订阅模型的事情也提上了日程。</p>
 <h3 id="消息队列1-0"><a href="#消息队列1-0" class="headerlink" title="消息队列1.0"></a>消息队列1.0</h3><p>我们初期只采用了消息队列的点对点模型。原因如下：</p>
 <ul>
 <li>业务模型相对比较简单，点对点已经满足需求</li>
@@ -485,7 +485,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#消息队列1-0"><span class="nav-number">1.1.</span> <span class="nav-text">消息队列1.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息队列2-0"><span class="nav-number">1.2.</span> <span class="nav-text">消息队列2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#技术选型"><span class="nav-number">1.2.1.</span> <span class="nav-text">技术选型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#阿里云的MQ"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">阿里云的MQ</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#kafka"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">kafka</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rabbitmq"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">rabbitmq</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#我们的优化"><span class="nav-number">1.2.2.</span> <span class="nav-text">我们的优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息队列1-0"><span class="nav-number">2.</span> <span class="nav-text">消息队列1.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息队列2-0"><span class="nav-number">3.</span> <span class="nav-text">消息队列2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#技术选型"><span class="nav-number">3.1.</span> <span class="nav-text">技术选型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#阿里云的MQ"><span class="nav-number">3.1.1.</span> <span class="nav-text">阿里云的MQ</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#kafka"><span class="nav-number">3.1.2.</span> <span class="nav-text">kafka</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#rabbitmq"><span class="nav-number">3.1.3.</span> <span class="nav-text">rabbitmq</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#我们的优化"><span class="nav-number">3.2.</span> <span class="nav-text">我们的优化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
